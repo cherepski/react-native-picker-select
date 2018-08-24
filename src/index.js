@@ -132,6 +132,7 @@ export default class RNPickerSelect extends PureComponent {
         this.onUpArrow = this.onUpArrow.bind(this);
         this.onDownArrow = this.onDownArrow.bind(this);
         this.onValueChange = this.onValueChange.bind(this);
+        this.onDone = this.onDone.bind(this);
         this.togglePicker = this.togglePicker.bind(this);
     }
 
@@ -150,11 +151,16 @@ export default class RNPickerSelect extends PureComponent {
     }
 
     onValueChange(value, index) {
-        this.props.onValueChange(value, index);
-
         this.setState({
             selectedItem: this.state.items[index],
         });
+    }
+
+    onDone() {
+      this.props.onDone(this.state.selectedItem);
+      this.setState({
+        selectedItem: this.state.items[0]
+      });
     }
 
     getPlaceholderStyle() {
@@ -239,6 +245,7 @@ export default class RNPickerSelect extends PureComponent {
                 <TouchableWithoutFeedback
                     onPress={() => {
                         this.togglePicker(true);
+                        this.onDone();
                     }}
                     hitSlop={{ top: 2, right: 2, bottom: 2, left: 2 }}
                 >
